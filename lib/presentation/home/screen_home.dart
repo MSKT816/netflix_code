@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:netflix_app/core/colors.dart';
 import 'package:netflix_app/presentation/home/widgets/home_movie_list.dart';
 import 'package:netflix_app/presentation/home/widgets/home_number_list_movies.dart';
@@ -12,127 +13,167 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
         body: ValueListenableBuilder(
-      valueListenable: scrollNotifier,
-      builder: (BuildContext context, bool select, Widget? _) {
-        return Stack(
-          children: [
-            ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
+          valueListenable: scrollNotifier,
+          builder: (BuildContext context, bool select, Widget? _) {
+            return Stack(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 600,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/obvVl1Sgu2AQOQ0lvcNBkiqjRIV.jpg'),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: -6,
-                      left: 0,
-                      right: 0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                NotificationListener<UserScrollNotification>(
+                  onNotification: (notification) {
+                    final ScrollDirection direction = notification.direction;
+                    if (direction == ScrollDirection.reverse) {
+                      scrollNotifier.value = false;
+                    } else if (direction == ScrollDirection.forward) {
+                      scrollNotifier.value = true;
+                    }
+                    return true;
+                  },
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    children: [
+                      Stack(
                         children: [
-                          const ButttonWithLabel(
-                            icon: Icons.add,
-                            name: 'My List',
+                          Container(
+                            height: 600,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/obvVl1Sgu2AQOQ0lvcNBkiqjRIV.jpg'),
+                              ),
+                            ),
                           ),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.white),
-                              onPressed: () {},
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.play_arrow,
-                                    color: Colors.black,
-                                  ),
-                                  Text(
-                                    'Play',
-                                    style: TextStyle(color: Colors.black),
-                                  )
-                                ],
-                              )),
-                          const ButttonWithLabel(
-                            icon: Icons.info,
-                            name: 'Info',
-                          )
+                          Container(
+                            height: 600,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black,
+                                    Colors.transparent,
+                                    Colors.black
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: -6,
+                            left: 0,
+                            right: 0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const ButttonWithLabel(
+                                  icon: Icons.add,
+                                  name: 'My List',
+                                ),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white),
+                                    onPressed: () {},
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          Icons.play_arrow,
+                                          color: Colors.black,
+                                        ),
+                                        Text(
+                                          'Play',
+                                          style: TextStyle(color: Colors.black),
+                                        )
+                                      ],
+                                    )),
+                                const ButttonWithLabel(
+                                  icon: Icons.info,
+                                  name: 'Info',
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: const [
-                      HomePageMovieListWidget(
-                        title: 'Released in the Past year',
-                      ),
-                      HomePageMovieListWidget(
-                        title: 'Trending Now',
-                      ),
-                      HomeNumberListMovies(),
-                      HomePageMovieListWidget(
-                        title: 'Tense Dramas',
-                      ),
-                      HomePageMovieListWidget(
-                        title: 'South Induiadn Cinema',
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            scrollNotifier.value == true
-                ? Container(
-                    color: Colors.black.withOpacity(0.5),
-                    height: 150,
-                    child: Column(
-                      children: [
-                        AppBarWidget(
-                          title: Container(
-                            padding: const EdgeInsets.only(left: 10, top: 20),
-                            height: 70,
-                            width: 70,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                        'https://www.designmantic.com/blog/wp-content/uploads/2016/07/Netflix-Revamps-Logo.jpg'))),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
                           children: const [
-                            HomeScreeenTopTitle(
-                              name: 'TV Shows',
+                            HomePageMovieListWidget(
+                              title: 'Released in the Past year',
                             ),
-                            HomeScreeenTopTitle(
-                              name: 'Movies',
+                            HomePageMovieListWidget(
+                              title: 'Trending Now',
                             ),
-                            HomeScreeenTopTitle(
-                              name: 'Categories',
+                            HomeNumberListMovies(),
+                            HomePageMovieListWidget(
+                              title: 'Tense Dramas',
+                            ),
+                            HomePageMovieListWidget(
+                              title: 'South Induiadn Cinema',
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  )
-                : const SizedBox(
-                    height: 10,
+                      )
+                    ],
                   ),
-          ],
-        );
-      },
-    ));
+                ),
+                scrollNotifier.value == true
+                    ? Stack(
+                        children: [
+                          Container(
+                            height: 125,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.black, Colors.transparent],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 125,
+                            child: Column(
+                              children: [
+                                AppBarWidget(
+                                  title: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, top: 20),
+                                    height: 50,
+                                    width: 30,
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: AssetImage(
+                                                'assets/images/Netflix-logo.png'))),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: const [
+                                    HomeScreeenTopTitle(
+                                      name: 'TV Shows',
+                                    ),
+                                    HomeScreeenTopTitle(
+                                      name: 'Movies',
+                                    ),
+                                    HomeScreeenTopTitle(
+                                      name: 'Categories',
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(
+                        height: 10,
+                      ),
+              ],
+            );
+          },
+        ));
   }
 }
 

@@ -9,27 +9,29 @@ class AppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        children: [
-          title,
-          const Spacer(),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.cast,
-                color: Colors.white,
-                size: 30,
-              )),
-          kwidth,
-          Container(
-            height: 25,
-            width: 25,
-            color: Colors.blue,
-          ),
-          kwidth,
-        ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Row(
+          children: [
+            title,
+            const Spacer(),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.cast,
+                  color: Colors.white,
+                  size: 30,
+                )),
+            kwidth,
+            Container(
+              height: 25,
+              width: 25,
+              color: Colors.blue,
+            ),
+            kwidth,
+          ],
+        ),
       ),
     );
   }
