@@ -16,19 +16,18 @@ class MuteUnmuteButtonWidget extends StatelessWidget {
           backgroundColor: Colors.black.withOpacity(0.05),
           child: IconButton(
               onPressed: () {
-                
                 if (state.volumeControl == VolumeControl.mute) {
-                  context.read<VolumeControlBloc>().add(Unmute());
+                  context.read<VolumeControlBloc>().add(const Unmute());
                 } else {
-                  context.read<VolumeControlBloc>().add(Mute());
+                  context.read<VolumeControlBloc>().add(const Mute());
                 }
               },
               icon: state.volumeControl == VolumeControl.mute
-                  ? Icon(
+                  ? const Icon(
                       Icons.volume_up,
                       size: 25,
                     )
-                  : Icon(Icons.volume_off)),
+                  : const Icon(Icons.volume_off)),
         );
       },
     );

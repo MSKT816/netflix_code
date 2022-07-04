@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:netflix_app/core/constants.dart';
+import 'package:netflix_app/core/strings.dart';
+import 'package:netflix_app/domain/serach/model/search_model/search_response/result.dart';
+import 'package:netflix_app/presentation/movie%20details%20page/movie_detail_page.dart';
 import 'package:netflix_app/presentation/search/widgets/search_page_title.dart';
 
 class SearchResultPage extends StatelessWidget {
-  const SearchResultPage({Key? key}) : super(key: key);
-
+  const SearchResultPage({Key? key, required this.searhResultList})
+      : super(key: key);
+  final List<SearchResultData> searhResultList;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -20,9 +26,24 @@ class SearchResultPage extends StatelessWidget {
               shrinkWrap: true,
               crossAxisCount: 3,
               childAspectRatio: 1 / 1.35,
-              children: List.generate(20, (index) {
-                return const MainCard();
-              }),
+              children: List.generate(
+                searhResultList.length,
+                (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      log("$kImageBaseUrlr${searhResultList[index].backdropPath}");
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => MovieDetailsPage(
+                                searchResultData: searhResultList[index],
+                              )));
+                    },
+                    child: MainCard(
+                      imageUrl:
+                          "$kImageBaseUrlr${searhResultList[index].posterPath}",
+                    ),
+                  );
+                },
+              ),
             ),
           )
         ],
@@ -32,12 +53,10 @@ class SearchResultPage extends StatelessWidget {
 }
 
 class MainCard extends StatelessWidget {
-  const MainCard({Key? key}) : super(key: key);
-
+  const MainCard({Key? key, required this.imageUrl}) : super(key: key);
+  final String imageUrl;
   @override
   Widget build(BuildContext context) {
-    String imageUrl =
-        'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/vHla3Ej2m53rNmvmYkzvennLrKn.jpg';
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),

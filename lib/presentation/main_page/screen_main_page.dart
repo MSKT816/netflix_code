@@ -22,7 +22,6 @@ class ScreenMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      
       body: ValueListenableBuilder(
         valueListenable: indexChangeNotifire,
         builder: (context, value, child) {

@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_app/core/colors.dart';
 import 'package:netflix_app/core/constants.dart';
+import 'package:netflix_app/core/strings.dart';
+import 'package:netflix_app/domain/downloads/model/downloads.dart';
 import 'package:netflix_app/presentation/search/widgets/search_page_title.dart';
 
 class SearchIdleWidget extends StatelessWidget {
-  const SearchIdleWidget({Key? key}) : super(key: key);
-
+  const SearchIdleWidget({Key? key, required this.movieList}) : super(key: key);
+  final List<MDownloads> movieList;
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
@@ -23,12 +25,14 @@ class SearchIdleWidget extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemBuilder: (ctx, index) => _SearchTile(
+                movieName: movieList[index].title != null
+                    ? movieList[index].title!
+                    : 'No name',
                 size: _size,
-                imageUrl: imageUrl,
-                index: index + 1,
+                imageUrl: "$kImageBaseUrlr${movieList[index].posterPatch}",
               ),
               separatorBuilder: (ctx, index) => kheight,
-              itemCount: 20,
+              itemCount: movieList.length,
             ),
           ),
         ],
@@ -42,13 +46,14 @@ class _SearchTile extends StatelessWidget {
     Key? key,
     required Size size,
     required this.imageUrl,
-    this.index = 0,
+    required this.movieName,
   })  : _size = size,
         super(key: key);
 
   final Size _size;
   final String imageUrl;
-  final int index;
+
+  final String movieName;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class _SearchTile extends StatelessWidget {
         kwidth,
         Expanded(
             child: Text(
-          'Movie $index',
+          movieName,
           style: const TextStyle(fontSize: 18),
         )),
         IconButton(

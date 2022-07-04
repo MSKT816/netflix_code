@@ -10,7 +10,6 @@ class HomePageMovieTile extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: Container(
-        
         width: 90,
         decoration: BoxDecoration(
             color: Colors.accents[index],

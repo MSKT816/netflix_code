@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:netflix_app/core/colors.dart';
 import 'package:netflix_app/presentation/home/widgets/home_movie_list.dart';
 import 'package:netflix_app/presentation/home/widgets/home_number_list_movies.dart';
 import 'package:netflix_app/presentation/widgets/appbar_widget.dart';
+import 'dart:developer';
 
 ValueNotifier<bool> scrollNotifier = ValueNotifier(true);
 
@@ -97,20 +100,32 @@ class ScreenHome extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
-                          children: const [
-                            HomePageMovieListWidget(
-                              title: 'Released in the Past year',
-                            ),
-                            HomePageMovieListWidget(
-                              title: 'Trending Now',
-                            ),
+                          children: [
+                            // BlocBuilder<CollectionBloc, CollectionState>(
+                            //     builder: (context, state) {
+                            //   print(state.collection.length);
+                            //   if (state.collection.isNotEmpty) {
+                            //     HomePageMovieListWidget(
+                            //       title: "Trending",
+                            //       imageList: state.collection,
+                            //     );
+                            //   }
+                            //   return const Center(
+                            //     child: CircularProgressIndicator(),
+                            //   );
+                            // }),
+
+                            // HomePageMovieListWidget(
+                            //   title: 'Released in the Past year',
+                            //),
+
                             HomeNumberListMovies(),
-                            HomePageMovieListWidget(
-                              title: 'Tense Dramas',
-                            ),
-                            HomePageMovieListWidget(
-                              title: 'South Induiadn Cinema',
-                            ),
+                            // HomePageMovieListWidget(
+                            //   title: 'Tense Dramas',
+                            //),
+                            // HomePageMovieListWidget(
+                            //   title: 'South Induiadn Cinema',
+                            // ),
                           ],
                         ),
                       )

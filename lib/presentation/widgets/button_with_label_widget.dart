@@ -11,10 +11,12 @@ class ButtonWithLabelWidget extends StatelessWidget {
       fontWeight: FontWeight.w500,
       fontSize: 16,
     ),
+    this.iconColor = Colors.white,
   }) : super(key: key);
   final IconData icon;
   final String name;
   final double iconSize;
+  final Color iconColor;
 
   final TextStyle textStyle;
   @override
@@ -24,7 +26,7 @@ class ButtonWithLabelWidget extends StatelessWidget {
         Icon(
           icon,
           size: iconSize,
-          color: whiteColor,
+          color: iconColor,
         ),
         Text(
           name,

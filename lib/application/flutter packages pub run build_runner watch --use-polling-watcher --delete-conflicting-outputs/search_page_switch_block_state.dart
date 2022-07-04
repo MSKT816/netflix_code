@@ -7,5 +7,5 @@ class SearchPageSwitchBlockState with _$SearchPageSwitchBlockState {
   }) = _SearchPageSwitchBlockState;
 
   factory SearchPageSwitchBlockState.initial() =>
-      SearchPageSwitchBlockState(searchScreen: SearchScreen.idle);
+      const SearchPageSwitchBlockState(searchScreen: SearchScreen.idle);
 }

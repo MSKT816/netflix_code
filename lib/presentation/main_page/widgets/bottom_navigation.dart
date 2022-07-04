@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 ValueNotifier<int> indexChangeNotifire = ValueNotifier(0);
 
 class BottomNavigationWidgets extends StatelessWidget {

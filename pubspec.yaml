@@ -37,8 +37,17 @@ dependencies:
   google_fonts: 2.2.0
   freezed_annotation: 1.1.0
   flutter_bloc: 8.0.1
-  video_player: 2.2.18
+  video_player: 2.3.0
   bordered_text: 2.0.0
+  json_serializable: ^6.1.5
+  dartz: ^0.10.1
+  dio: ^4.0.4
+  get_it: ^7.2.0
+  injectable: 1.5.3
+  
+  json_annotation: ^4.4.0
+  share_plus: ^4.0.3
+  intl: 0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +61,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   freezed: 1.1.1
   build_runner: 2.1.7
+  injectable_generator: ^1.5.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

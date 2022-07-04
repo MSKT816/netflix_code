@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_app/presentation/widgets/button_with_label_widget.dart';
-import 'package:netflix_app/presentation/widgets/mute_unmute_button_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_app/application/fast_laugh/fastlaugh_bloc.dart';
+import 'package:netflix_app/presentation/fast&laughs/widget/video_list_item.dart';
 
 class ScreenFastLaughs extends StatelessWidget {
   ScreenFastLaughs({Key? key}) : super(key: key);
@@ -14,70 +15,39 @@ class ScreenFastLaughs extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<FastlaughBloc>(context).add(const Initialize());
+    });
     return Scaffold(
-      body: Stack(
-        children: [
-          PageView(
-            scrollDirection: Axis.vertical,
-            children: List.generate(
-                imagList.length,
-                (index) => FastLaughsTile(
-                      imageUrl: imagList[index],
-                    )),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const MuteUnmuteButtonWidget(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/yQgGYiHUoDYeA4TbYlghpA5lmKH.jpg'),
-                      ),
+      body: BlocBuilder<FastlaughBloc, FastlaughState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+              ),
+            );
+          } else if (state.isError) {
+            return const Text("Some error occured");
+          } else if (state.videosList.isEmpty) {
+            return const Center(
+              child: Text("Video list is empty"),
+            );
+          } else {
+            return PageView(
+              scrollDirection: Axis.vertical,
+              children: List.generate(
+                state.videosList.length,
+                (index) => VideoListItemInheritedWidget(
+                    widget: VideoListItem(
+                      key: Key(index.toString()),
+                      index: index,
                     ),
-                    ButtonWithLabelWidget(
-                      icon: Icons.emoji_emotions,
-                      name: 'LOL',
-                    ),
-                    ButtonWithLabelWidget(icon: Icons.add, name: 'My List'),
-                    ButtonWithLabelWidget(
-                      icon: Icons.share,
-                      name: 'Share',
-                    ),
-                    ButtonWithLabelWidget(
-                      icon: Icons.play_arrow,
-                      name: 'Play',
-                    ),
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class FastLaughsTile extends StatelessWidget {
-  const FastLaughsTile({Key? key, required this.imageUrl}) : super(key: key);
-  final String imageUrl;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
+                    movieData: state.videosList[index]),
+              ),
+            );
+          }
+        },
       ),
     );
   }
