@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_app/core/constants.dart';
+import 'package:netflix_app/core/strings.dart';
 
 import 'package:netflix_app/presentation/home/widgets/home_movie_tile.dart';
 
@@ -9,8 +10,10 @@ class HomePageMovieListWidget extends StatelessWidget {
   const HomePageMovieListWidget({
     Key? key,
     required this.title,
+    required this.posterList,
   }) : super(key: key);
   final String title;
+  final List<String> posterList;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +26,10 @@ class HomePageMovieListWidget extends StatelessWidget {
           height: 140,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemBuilder: (ctx, index) =>
-                HomePageMovieTile(imgUrl: "", index: index),
+            itemBuilder: (ctx, index) => HomePageMovieTile(
+                imgUrl: "$kImageBaseUrlr${posterList[index]}", index: index),
             separatorBuilder: (ctx, index) => kwidth,
-            itemCount: 0,
+            itemCount: posterList.length,
           ),
         ),
         kheight,

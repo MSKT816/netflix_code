@@ -277,7 +277,7 @@ class CommingSoonTileWidget extends StatelessWidget {
               kheight20,
               Text(
                 title,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
               Text(
                 overview,
