@@ -40,19 +40,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }, (HotAndNewResponse response) {
         List<HotAndNEwData> result = response.results;
 
-        List<HotAndNEwData> pastYear = result;
+        List<HotAndNEwData> pastYear = result.toList();
         pastYear.shuffle();
-        print(pastYear[0].title);
         result.shuffle();
-        List<HotAndNEwData> trending = result;
+        List<HotAndNEwData> trending = result.toList();
         trending.shuffle();
-        print(pastYear[0].title);
         result.shuffle();
-        List<HotAndNEwData> southIndian = result;
+        List<HotAndNEwData> southIndian = result.toList();
         southIndian.shuffle();
-        List<HotAndNEwData> dramas = result;
+        List<HotAndNEwData> dramas = result.toList();
         dramas.shuffle();
-        print(pastYear[0].title);
         // print(trending[0].posterPath);
         return HomeState(
           stateID: DateTime.now().millisecondsSinceEpoch.toString(),

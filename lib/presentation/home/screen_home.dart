@@ -93,9 +93,9 @@ class ScreenHome extends StatelessWidget {
                               posterList: trending.sublist(0, 10),
                               title: "Trending",
                             ),
-                            // HomeNumberListMovies(
-                            //   imageList: top10TVShows.sublist(0, 10),
-                            // ),
+                            HomeNumberListMovies(
+                              imageList: top10TVShows.sublist(0, 10),
+                            ),
                             HomePageMovieListWidget(
                               posterList: tenseDramas.sublist(0, 10),
                               title: 'Tense Dramas',
